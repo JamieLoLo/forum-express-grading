@@ -11,7 +11,7 @@ const db = {}
 // 資料庫連線
 let sequelize
 if (config.use_env_variable) {
-  sequelize = new Sequelize(process.env[config.use_env_variable], config, {
+  sequelize = new Sequelize(process.env[config.use_env_variable], {
     dialect: 'mysql',
     dialectModule: require('mysql2')
   })
@@ -20,7 +20,7 @@ if (config.use_env_variable) {
     config.database,
     config.username,
     config.password,
-    config,
+
     {
       dialect: 'mysql',
       dialectModule: require('mysql2')
