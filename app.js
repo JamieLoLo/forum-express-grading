@@ -14,6 +14,8 @@ const path = require('path')
 
 app.engine('hbs', handlebars({ extname: '.hbs', helpers: handlebarsHelpers }))
 app.set('view engine', 'hbs')
+app.set('views', path.join(__dirname, 'views'))
+
 app.use(express.urlencoded({ extended: true }))
 app.use(
   session({ secret: SESSION_SECRET, resave: false, saveUninitialized: false })

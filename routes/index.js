@@ -15,17 +15,12 @@ router.post(
   '/signin',
   passport.authenticate('local', {
     failureRedirect: '/signin',
-    failureFlash: true,
+    failureFlash: true
   }),
   userController.signIn
 )
 router.get('/logout', userController.logout)
 router.get('/restaurants', authenticated, restController.getRestaurants)
-// router.use('/', (req, res) => res.redirect('/restaurants'))
-// router.use('/', generalErrorHandler)
-
-router.use((req, res) => res.redirect('/restaurants'))
-
-// 错误处理中间件
-router.use(generalErrorHandler)
+router.use('/', (req, res) => res.redirect('/restaurants'))
+router.use('/', generalErrorHandler)
 module.exports = router
