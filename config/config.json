@@ -4,16 +4,19 @@
     "password": "password",
     "database": "forum",
     "host": "127.0.0.1",
-    "dialect": "mysql"
+    "dialect": "mysql",
+    "dialectModule": "mysql2"
   },
   "production": {
-    "use_env_variable": "DATABASE_URL"
+    "use_env_variable": "DATABASE_URL",
+    "dialectModule": "mysql2"
   },
   "travis": {
     "username": "travis",
     "database": "forum",
     "host": "127.0.0.1",
     "dialect": "mysql",
-    "logging": false
+    "logging": false,
+    "dialectModule": "mysql2"
   }
 }
