@@ -12,21 +12,25 @@ const handlebarsHelpers = require('./helpers/handlebars-helpers')
 const methodOverride = require('method-override')
 const path = require('path')
 
+console.log(111)
 // 註冊 Handlebars 樣板引擎，並指定副檔名為 .hbs
 app.engine('hbs', handlebars({ extname: '.hbs', helpers: handlebarsHelpers }))
 // 設定使用 Handlebars 做為樣板引擎
 app.set('view engine', 'hbs')
-
+console.log(222)
 app.use(express.urlencoded({ extended: true }))
 app.use(
   session({ secret: SESSION_SECRET, resave: false, saveUninitialized: false })
 )
+console.log(333)
 app.use(passport.initialize())
 app.use(passport.session())
+console.log(444)
 app.use(flash())
 app.use(methodOverride('_method'))
 app.use('/upload', express.static(path.join(__dirname, 'upload')))
 
+console.log(555)
 app.use((req, res, next) => {
   res.locals.success_messages = req.flash('success_messages') // 設定 success_msg 訊息
   res.locals.error_messages = req.flash('error_messages') // 設定 warning_msg 訊息
