@@ -58,6 +58,7 @@ const adminController = {
     if (!name) throw new Error('Restaurant name is required!')
 
     const { file } = req
+    console.log('!!!!!!!!!!!', req.file)
 
     Promise.all([Restaurant.findByPk(req.params.id), imgurFileHandler(file)])
 

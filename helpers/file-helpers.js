@@ -18,9 +18,13 @@ const localFileHandler = file => {
 
 const imgurFileHandler = file => {
   return new Promise((resolve, reject) => {
+    console.log('?????????????', file)
     if (!file) return resolve(null)
+
+    // 使用 base64 形式上傳 buffer
+    const base64Image = file.buffer.toString('base64')
     return imgur
-      .uploadFile(file.path)
+      .uploadBase64(base64Image)
       .then(img => {
         console.log(img)
         resolve(img?.link || null) // 檢查 img 是否存在
