@@ -1,4 +1,4 @@
-const { Restaurant } = require('../models')
+const { Restaurant, User } = require('../models')
 const { imgurFileHandler } = require('../helpers/file-helpers')
 
 const adminController = {
@@ -9,9 +9,15 @@ const adminController = {
       .then(restaurants => res.render('admin/restaurants', { restaurants }))
       .catch(err => next(err))
   },
+  getUsers: (req, res, next) => {
+    return User.findAll({ raw: true })
+      .then(users => res.render('admin/users', { users }))
+      .catch(err => next(err))
+  },
   createRestaurant: (req, res) => {
     return res.render('admin/create-restaurant')
   },
+
   postRestaurant: (req, res, next) => {
     const { name, tel, address, openingHours, description } = req.body
     if (!name) throw new Error('Restaurant name is required!')
@@ -58,7 +64,6 @@ const adminController = {
     if (!name) throw new Error('Restaurant name is required!')
 
     const { file } = req
-    console.log('!!!!!!!!!!!', req.file)
 
     Promise.all([Restaurant.findByPk(req.params.id), imgurFileHandler(file)])
 
@@ -76,6 +81,22 @@ const adminController = {
       .then(() => {
         req.flash('success_messages', 'restaurant was successfully to update')
         res.redirect('/admin/restaurants')
+      })
+      .catch(err => next(err))
+  },
+  patchUser: (req, res, next) => {
+    return User.findByPk(req.params.id)
+      .then(user => {
+        if (!user) throw new Error("User didn't exist!")
+        if (user.email === 'root@example.com') {
+          req.flash('error_messages', '禁止變更 root 權限')
+          return res.redirect('back')
+        }
+        return user.update({ isAdmin: !user.isAdmin })
+      })
+      .then(() => {
+        req.flash('success_messages', '使用者權限變更成功')
+        res.redirect('/admin/users')
       })
       .catch(err => next(err))
   },
