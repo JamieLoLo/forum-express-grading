@@ -7,10 +7,10 @@
     "dialect": "mysql"
   },
   "production": {
-    "username": "${RDS_USERNAME}",
-    "password": "${RDS_PASSWORD}",
-    "host": "#{RDS_HOST}",
-    "database": "#{RDS_DB_NAME}",
+    "username": "admin",
+    "password": "I[k}qIev(9S#2rj8MSQKY?2KlOEg",
+    "host": "database-1.cl0eqeo4mers.ap-northeast-1.rds.amazonaws.com",
+    "database": "forum_aws",
     "dialect": "mysql"
   },
   "travis": {
