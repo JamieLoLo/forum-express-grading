@@ -1,0 +1,29 @@
+<div class='row mb-5'>
+  <div class='col-md-12 d-flex border py-4'>
+    <div style='width: 30%; margin-right:50px;'>
+      <img
+        src='{{user.image}}'
+        alt='avatar'
+        style='width: 100%; height: 100%; border-radius: 50%; object-fit:cover;'
+      />
+    </div>
+    <div style='width: 70%;'>
+      <p>{{user.name}}</p>
+      <p>{{user.email}}</p>
+      <a href='/users/{{user.id}}/edit' class='btn btn-primary'>edit</a>
+    </div>
+  </div>
+  <div class='col-md-12 d-flex border py-4 mt-2'>
+    已評論餐廳
+  </div>
+  <div class='border py-4'>
+    {{#each user.Comments}}
+      <a href='/restaurants/{{this.restaurantId}}'>
+        <img
+          src='{{this.Restaurant.image}}'
+          alt='餐廳照片'
+          style='width: 80px; height:80px; object-fit:cover; margin-right:20px;'
+        /></a>
+    {{/each}}
+  </div>
+</div>

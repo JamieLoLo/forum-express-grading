@@ -7,14 +7,10 @@ const commentController = require('../controllers/comment-controller')
 const { generalErrorHandler } = require('../middleware/error-handler')
 const passport = require('../config/passport')
 const { authenticated, authenticatedAdmin } = require('../middleware/auth')
+const upload = require('../middleware/multer')
 
-router.get(
-  '/restaurants/:id/dashboard',
-  authenticated,
-  restController.getDashboard
-)
-router.get('/restaurants/:id', authenticated, restController.getRestaurant)
 router.use('/admin', authenticatedAdmin, admin)
+
 router.get('/signup', userController.signUpPage)
 router.post('/signup', userController.signUp)
 router.get('/signin', userController.signInPage)
@@ -27,6 +23,14 @@ router.post(
   userController.signIn
 )
 router.get('/logout', userController.logout)
+
+router.get('/restaurants/feeds', authenticated, restController.getFeeds)
+router.get(
+  '/restaurants/:id/dashboard',
+  authenticated,
+  restController.getDashboard
+)
+router.get('/restaurants/:id', authenticated, restController.getRestaurant)
 router.get('/restaurants', authenticated, restController.getRestaurants)
 
 router.delete(
@@ -35,6 +39,26 @@ router.delete(
   commentController.deleteComment
 )
 router.post('/comments', authenticated, commentController.postComment)
+
+router.get('/users/:id/edit', authenticated, userController.editUser)
+router.get('/users/:id', authenticated, userController.getUser)
+router.put(
+  '/users/:id',
+  authenticated,
+  upload.single('image'),
+  userController.putUser
+)
+
+router.post(
+  '/favorite/:restaurantId',
+  authenticated,
+  userController.addFavorite
+)
+router.delete(
+  '/favorite/:restaurantId',
+  authenticated,
+  userController.removeFavorite
+)
 
 router.use('/', (req, res) => res.redirect('/restaurants'))
 router.use('/', generalErrorHandler)
