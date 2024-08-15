@@ -40,6 +40,7 @@ router.delete(
 )
 router.post('/comments', authenticated, commentController.postComment)
 
+router.get('/users/top', authenticated, userController.getTopUsers)
 router.get('/users/:id/edit', authenticated, userController.editUser)
 router.get('/users/:id', authenticated, userController.getUser)
 router.put(
@@ -60,6 +61,17 @@ router.delete(
   userController.removeFavorite
 )
 
+router.post('/like/:restaurantId', authenticated, userController.addLike)
+router.delete('/like/:restaurantId', authenticated, userController.removeLike)
+
+router.post('/following/:userId', authenticated, userController.addFollowing)
+router.delete(
+  '/following/:userId',
+  authenticated,
+  userController.removeFollowing
+)
+
 router.use('/', (req, res) => res.redirect('/restaurants'))
 router.use('/', generalErrorHandler)
+
 module.exports = router

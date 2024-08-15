@@ -5,24 +5,16 @@ const path = require('path')
 const Sequelize = require('sequelize')
 const basename = path.basename(__filename)
 const db = {}
-// const env = process.env.NODE_ENV || 'development'
+const env = process.env.NODE_ENV || 'development'
 
-let config = require('../config/config.json').production
-
-// config = {
-//   ...config,
-//   username: process.env.RDS_USERNAME || config.username,
-//   password: process.env.RDS_PASSWORD || config.password,
-//   host: process.env.RDS_HOST || config.host,
-//   database: process.env.RDS_DB_NAME || config.database
-// }
+let config = require('../config/config.json').production[env]
 
 config = {
   ...config,
-  username: config.username,
-  password: config.password,
-  host: config.host,
-  database: config.database
+  username: process.env.RDS_USERNAME || config.username,
+  password: process.env.RDS_PASSWORD || config.password,
+  host: process.env.RDS_HOST || config.host,
+  database: process.env.RDS_DB_NAME || config.database
 }
 
 const sequelize = new Sequelize(
